@@ -6,6 +6,8 @@
 #include "raytracing.h"
 #include "idx_stack.h"
 
+#include <omp.h>
+
 #define MAX_REFLECTION_BOUNCES	3
 #define MAX_DISTANCE 1000000000000.0
 #define MIN_DISTANCE 0.00001
@@ -468,6 +470,7 @@ void raytracing(uint8_t *pixels, color background_color,
 
     int factor = sqrt(SAMPLES);
     for (int j = 0; j < height; j++) {
+    #pragma omp parallel for
         for (int i = 0; i < width; i++) {
             double r = 0, g = 0, b = 0;
             /* MSAA */
